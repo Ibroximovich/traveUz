@@ -1,0 +1,136 @@
+// ============================================
+// PRISMA SCHEMA - Tripuz Turizm Marketplace
+// ============================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============ ENUMS ============
+
+enum Role {
+  TOURIST
+  GUIDE
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+}
+
+// ============ MODELS ============
+
+model User {
+  id                     String   @id @default(cuid())
+  email                  String   @unique
+  name                   String
+  avatar                 String?
+  isCustomAvatarUploaded Boolean  @default(false)
+  phone                  String?
+  telegramHandle         String?
+  commissionRate         Float    @default(10)
+  role                   Role     @default(TOURIST)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  // Relations
+  experiences Experience[] @relation("GuideExperiences")
+  bookings    Booking[]
+
+  @@map("users")
+}
+
+model Experience {
+  id           String   @id @default(cuid())
+  title        String
+  title_uz     String?
+  title_en     String?
+  title_ru     String?
+  description  String
+  description_uz String?
+  description_en String?
+  description_ru String?
+  city         String   @default("Samarqand")
+  price        Decimal  @db.Decimal(10, 2)
+  priceUsd     Decimal  @default(0) @db.Decimal(10, 2)
+  priceUzs     Decimal? @db.Decimal(12, 2)
+  duration     String   @default("3 soat")
+  durationHours Float   @default(3)
+  meetingPoint String
+  meetingPointText String?
+  meetingPointText_uz String?
+  meetingPointText_en String?
+  meetingPointText_ru String?
+  meetingPointMapUrl String?
+  languages    Json     @default("[\"O'zbekcha\"]")
+  images       Json     @default("[]")
+  isActive     Boolean  @default(true)
+  guideId      String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  guide          User            @relation("GuideExperiences", fields: [guideId], references: [id], onDelete: Cascade)
+  availableDates AvailableDate[]
+  bookings       Booking[]
+
+  @@index([city])
+  @@index([guideId])
+  @@map("experiences")
+}
+
+model AvailableDate {
+  id           String   @id @default(cuid())
+  experienceId String
+  date         DateTime
+  slots        Int      @default(10)
+  maxCapacity  Int      @default(10)
+  bookedCount  Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  // Relations
+  experience Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  bookings   Booking[]
+
+  @@index([experienceId])
+  @@map("available_dates")
+}
+
+model Booking {
+  id                String        @id @default(cuid())
+  userId            String
+  experienceId      String
+  dateId            String
+  participantsCount Int
+  totalPrice        Decimal       @db.Decimal(10, 2)
+  status            BookingStatus @default(PENDING)
+  paymentStatus     PaymentStatus @default(PENDING)
+  voucherCode       String        @unique
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  // Relations
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  experience    Experience    @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  availableDate AvailableDate @relation(fields: [dateId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([experienceId])
+  @@index([dateId])
+  @@index([voucherCode])
+  @@map("bookings")
+}

@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,600..900;1,600..900&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* TRIPUZ Boutique Travel Design Tokens */
+  --color-bg-base: #0f1419;
+  --color-bg-card: #161f28;
+  --color-bg-elevated: #1e2936;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-accent: rgba(217, 119, 6, 0.25);
+  
+  --color-accent-terracotta: #c2703d;
+  --color-accent-amber: #d97706;
+  --color-accent-gold: #d4af37;
+  --color-accent-cyan: #0ea5e9;
+
+  --color-text-primary: #f5f5f0;
+  --color-text-secondary: #9ca3af;
+  --color-text-muted: #6b7280;
+
+  --color-status-success: #10b981;
+  --color-status-warning: #f59e0b;
+  --color-status-error: #ef4444;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-base);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .font-serif, .heading-serif {
+    font-family: var(--font-serif);
+  }
+}
+
+/* Custom Ant Design Boutique Overrides */
+.ant-card {
+  background-color: rgba(22, 31, 40, 0.95) !important;
+  border-color: rgba(217, 119, 6, 0.2) !important;
+  backdrop-filter: blur(16px);
+  border-radius: 1rem !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.ant-card:hover {
+  border-color: rgba(217, 119, 6, 0.4) !important;
+}
+
+.ant-card-head {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+  color: #f5f5f0 !important;
+  font-family: var(--font-serif) !important;
+}
+
+.ant-modal-content {
+  background-color: #161f28 !important;
+  border: 1px solid rgba(217, 119, 6, 0.3) !important;
+  color: #f5f5f0 !important;
+  border-radius: 1.25rem !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8) !important;
+}
+
+.ant-modal-header {
+  background-color: #161f28 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 1.25rem 1.25rem 0 0 !important;
+}
+
+.ant-modal-title {
+  color: #f5f5f0 !important;
+  font-family: var(--font-serif) !important;
+}
+
+.dark-select-dropdown {
+  background-color: #1e2936 !important;
+  border: 1px solid rgba(217, 119, 6, 0.3) !important;
+  border-radius: 0.75rem !important;
+}
+
+.dark-select-dropdown .ant-select-item {
+  color: #9ca3af !important;
+}
+
+.dark-select-dropdown .ant-select-item-option-active,
+.dark-select-dropdown .ant-select-item-option-selected {
+  background-color: #2a384b !important;
+  color: #f5f5f0 !important;
+}
+
+.custom-lang-select .ant-select-selection-item {
+  color: #f5f5f0 !important;
+}
+
+/* AntD Buttons Micro-Interactions */
+.ant-btn {
+  font-family: var(--font-sans);
+  border-radius: 0.75rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.ant-btn:active {
+  transform: scale(0.98);
+}
+
+/* AntD Input focus glowing states */
+.ant-input, .ant-input-number, .ant-select-selector {
+  background-color: #161f28 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f5f5f0 !important;
+  border-radius: 0.75rem !important;
+}
+
+.ant-input:focus, .ant-input-number-focused, .ant-input-focused {
+  border-color: #d97706 !important;
+  box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.2) !important;
+}
+
+.ant-input::placeholder {
+  color: #6b7280 !important;
+}
+
+/* Table dark styles */
+.ant-table {
+  background: transparent !important;
+  color: #f5f5f0 !important;
+}
+
+.ant-table-thead > tr > th {
+  background: #1e2936 !important;
+  color: #9ca3af !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.ant-table-tbody > tr > td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  color: #f5f5f0 !important;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background: rgba(30, 41, 54, 0.6) !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0f1419;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e2936;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c2703d;
+}
+
+/* Mobile Responsive Modal Overrides */
+@media (max-width: 640px) {
+  .ant-modal {
+    max-width: calc(100vw - 16px) !important;
+    margin: 8px auto !important;
+    top: 8px !important;
+  }
+  .ant-modal-content {
+    padding: 16px !important;
+  }
+}
