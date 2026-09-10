@@ -134,63 +134,7 @@ export const Login: React.FC = () => {
     setErrorMessage(null);
 
     try {
-      // Preferred OAuth2 Token Client with forced prompt: 'select_account'
-      if (window.google.accounts.oauth2) {
-        const client = window.google.accounts.oauth2.initTokenClient({
-          client_id: clientId,
-          scope: 'email profile openid',
-          prompt: 'select_account',
-          callback: async (tokenResponse: any) => {
-            if (tokenResponse && tokenResponse.access_token) {
-              try {
-                // Fetch real profile from Google UserInfo endpoint using access_token
-                const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-                  headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-                });
-                const googleUser = await res.json();
-
-                if (googleUser && googleUser.email) {
-                  const realGoogleTokenPayload = btoa(
-                    JSON.stringify({
-                      sub: googleUser.sub || `google-${Date.now()}`,
-                      email: googleUser.email,
-                      name: googleUser.name || googleUser.email,
-                      picture:
-                        googleUser.picture ||
-                        `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                          googleUser.name || 'Google User'
-                        )}&background=6366f1&color=fff&size=128`,
-                      email_verified: googleUser.email_verified ?? true,
-                    })
-                  );
-                  await handleGoogleAuth(realGoogleTokenPayload, selectedRole);
-                } else {
-                  throw new Error(t('common.server_error'));
-                }
-              } catch (err: unknown) {
-                console.error('Google profile fetch error:', err);
-                const msg = (err as Error).message || t('auth.google_login_error');
-                setErrorMessage(msg);
-                message.error(msg);
-                setLoading(false);
-              }
-            } else {
-              setLoading(false);
-            }
-          },
-          error_callback: (err: any) => {
-            console.error('Google OAuth error:', err);
-            setLoading(false);
-          },
-        });
-
-        // Request OAuth access token while explicitly enforcing prompt: 'select_account'
-        client.requestAccessToken({ prompt: 'select_account' });
-        return;
-      }
-
-      // Fallback ID Token client
-      if (window.google.accounts.id) {
+      if (window.google?.accounts?.id) {
         window.google.accounts.id.initialize({
           client_id: clientId,
           auto_select: false,
@@ -208,6 +152,9 @@ export const Login: React.FC = () => {
             setLoading(false);
           }
         });
+      } else {
+        setLoading(false);
+        message.error(t('auth.google_sdk_loading'));
       }
     } catch (err) {
       console.error('Google GIS Error:', err);
