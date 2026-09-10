@@ -228,7 +228,7 @@ export const GuideDashboard: React.FC = () => {
 
   // Avatar & Profile instant feedback states
   const [uploadedAvatarUrl, setUploadedAvatarUrl] = useState<string | null>(null);
-  const [justSavedProfile, setJustSavedProfile] = useState<boolean>(false);
+  const [_, setJustSavedProfile] = useState<boolean>(false);
   const [isEditingProfile, setIsEditingProfile] = useState<boolean>(false);
 
   // File Upload State

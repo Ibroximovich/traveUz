@@ -57,21 +57,6 @@ export const Login: React.FC = () => {
     message.info(`${t('common.language')}: ${langLabels[val] || val}`);
   };
 
-  /**
-   * Helper function to build a valid base64 JSON mock Google token for dev testing.
-   */
-  const generateDevMockToken = (role: UserRole): string => {
-    const isGuide = role === 'GUIDE';
-    const mockPayload = {
-      sub: isGuide ? 'google-mock-guide-123' : 'google-mock-tourist-456',
-      email: isGuide ? 'guide@tripuz.uz' : 'tourist@tripuz.uz',
-      name: isGuide ? 'Samarqand Gidi - Jasur' : 'Sayohatchi - Jasur',
-      picture: `https://ui-avatars.com/api/?name=${isGuide ? 'Jasur+Gid' : 'Jasur+Tourist'}&background=${isGuide ? '10b981' : '6366f1'}&color=fff&size=128`,
-      email_verified: true,
-      role: role,
-    };
-    return btoa(JSON.stringify(mockPayload));
-  };
 
   /**
    * Main login execution handler
@@ -231,14 +216,6 @@ export const Login: React.FC = () => {
     }
   };
 
-  /**
-   * Quick Dev Mock Login trigger
-   */
-  const handleQuickDevLogin = (role: UserRole) => {
-    setSelectedRole(role);
-    const devToken = generateDevMockToken(role);
-    handleGoogleAuth(devToken, role);
-  };
 
   /**
    * Custom token login submit
