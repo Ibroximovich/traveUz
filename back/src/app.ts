@@ -14,17 +14,24 @@ const app: Application = express();
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // ─── Security Middleware ───────────────────────────────────────────────────────
-// Helmet: Swagger UI uchun CSP ni yumshataymiz
+// Helmet: Swagger UI uchun CSP ni yumshatamiz
 app.use(
   helmet({
     contentSecurityPolicy: env.isDev ? false : undefined,
   }),
 );
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      // In dev mode allow any localhost origin or no origin (Postman/curl)
-      if (!origin || env.isDev || origin === env.clientUrl) {
+      // In dev mode allow any localhost origin or no origin (Postman/curl), 
+      // or if it matches clientUrl, or ends with .vercel.app
+      if (
+        !origin || 
+        env.isDev || 
+        origin === env.clientUrl || 
+        origin.endsWith('.vercel.app')
+      ) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
@@ -79,7 +86,7 @@ if (env.isDev) {
 
 import { languageMiddleware } from './middlewares/language.middleware';
 
-// ─── Language Middleware ───────────────────────────────────────────────────────
+// ─── Language Middleware ────────────────────────────────_______________________
 app.use(languageMiddleware);
 
 // ─── API Routes ────────────────────────────────────────────────────────────────
