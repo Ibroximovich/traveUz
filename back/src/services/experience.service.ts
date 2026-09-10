@@ -43,8 +43,17 @@ export function localizeExperience<T extends Partial<Experience>>(exp: T, lang: 
 export async function getExperiences(query: ExperienceQueryDto, lang: SupportedLanguage = 'uz') {
   const { city, sort, page = 1, limit = 50 } = query;
   const skip = (page - 1) * limit;
+  const now = new Date();
 
-  const where: any = { isActive: true };
+  const where: any = {
+    isActive: true,
+    availableDates: {
+      some: {
+        date: { gte: now },
+        slots: { gt: 0 },
+      },
+    },
+  };
   if (city && city !== 'ALL') {
     where.city = { contains: city, mode: 'insensitive' };
   }
@@ -71,7 +80,10 @@ export async function getExperiences(query: ExperienceQueryDto, lang: SupportedL
           select: { bookings: true, availableDates: true },
         },
         availableDates: {
-          where: { date: { gte: new Date() } },
+          where: {
+            date: { gte: now },
+            slots: { gt: 0 },
+          },
           orderBy: { date: 'asc' },
         },
       },
@@ -93,6 +105,19 @@ export async function getExperiences(query: ExperienceQueryDto, lang: SupportedL
   });
 
   combined = [...combined, ...mockFiltered];
+
+  // STRICT REQUIREMENT: Only keep experiences that have at least 1 future available date slot
+  combined = combined.filter((exp) => {
+    if (!exp.availableDates || !Array.isArray(exp.availableDates) || exp.availableDates.length === 0) {
+      return false;
+    }
+    const validFutureSlots = exp.availableDates.filter((d: any) => {
+      const isFuture = new Date(d.date) >= now;
+      const hasSlots = d.slots === undefined || Number(d.slots) > 0;
+      return isFuture && hasSlots;
+    });
+    return validFutureSlots.length > 0;
+  });
 
   if (sort === 'price_asc' || sort === 'price-asc' || sort === 'asc') {
     combined.sort((a, b) => Number(a.priceUsd || a.price) - Number(b.priceUsd || b.price));

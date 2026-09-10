@@ -69,6 +69,7 @@ import {
   updateGuideProfile,
 } from '../services/guide.api';
 import type { Experience, Booking, GuideStats, GuideProfile } from '../types/experience';
+import { formatLanguageName } from '../types/experience';
 import dayjs from 'dayjs';
 
 const USD_TO_UZS_RATE = 12800;
@@ -1523,7 +1524,7 @@ export const GuideDashboard: React.FC = () => {
                                   <div className="flex items-center gap-1.5 flex-wrap text-xs">
                                     {(Array.isArray(exp.languages) ? exp.languages : ["O'zbekcha"]).map((lang, idx) => (
                                       <span key={idx} className="inline-flex items-center gap-1 bg-[#161F28] px-2.5 py-1 rounded-xl border border-slate-800 text-slate-300 text-xs">
-                                        🌐 {lang}
+                                        🌐 {formatLanguageName(lang, t)}
                                       </span>
                                     ))}
                                   </div>
@@ -1758,11 +1759,70 @@ export const GuideDashboard: React.FC = () => {
                     </span>
                   ),
                   children: (
-                    <div className="py-6 max-w-2xl">
+                    <div className="py-6 max-w-2xl space-y-6">
                       <h3 className="text-xl font-bold font-serif text-white m-0 mb-4">{t('guide.profile.personal_info')}</h3>
 
+                      {/* Profile Card Overview (Desktop - Read-Only State) */}
+                      <div className="bg-[#161F28] p-5 rounded-2xl border border-slate-800 space-y-4 shadow-lg">
+                        <div className="flex items-center gap-5">
+                          <Avatar
+                            size={72}
+                            src={uploadedAvatarUrl || profileForm.getFieldValue('avatar') || profile?.avatar || user?.avatar}
+                            icon={<UserOutlined />}
+                            className="bg-gradient-to-tr from-[#D97706] to-[#C2703D] border-2 border-amber-400 flex-shrink-0 shadow-md"
+                          />
+                          <div className="min-w-0 flex-1 space-y-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h3 className="font-serif font-bold text-white text-lg truncate m-0">{profile?.name || user?.name}</h3>
+                              <span className="px-2.5 py-0.5 rounded-full bg-[#C2703D]/15 border border-[#C2703D]/40 text-amber-300 font-bold text-xs">
+                                ✓ GUIDE
+                              </span>
+                            </div>
+                            <div className="text-xs text-slate-400 truncate">✉️ {profile?.email || user?.email}</div>
+                            {(profile?.phone || user?.phone) && (
+                              <div className="text-xs text-slate-400 truncate">📞 {profile?.phone || user?.phone}</div>
+                            )}
+                            {(profile?.telegramHandle || (user as any)?.telegramHandle) && (
+                              <div className="text-xs text-amber-400 truncate">💬 {profile?.telegramHandle || (user as any)?.telegramHandle}</div>
+                            )}
+                            <div className="text-xs text-amber-300 font-semibold pt-0.5">{t('guide.profile.commission_rate')} {profile?.commissionRate || 10}%</div>
+                          </div>
+                        </div>
+
+                        {/* Platform Summary Stats (Desktop) */}
+                        <div className="grid grid-cols-3 gap-3 pt-3 border-t border-slate-800/80 text-center">
+                          <div className="bg-[#0F1419] p-3 rounded-xl border border-slate-800">
+                            <div className="text-xs text-slate-400 font-bold uppercase">{t('guide.tabs.my_tours')}</div>
+                            <div className="text-base font-bold text-white mt-0.5">{Math.max(stats.totalExperiences, experiences.length)}</div>
+                          </div>
+                          <div className="bg-[#0F1419] p-3 rounded-xl border border-slate-800">
+                            <div className="text-xs text-slate-400 font-bold uppercase">{t('guide.tabs.bookings')}</div>
+                            <div className="text-base font-bold text-indigo-400 mt-0.5">{Math.max(stats.totalBookings, bookings.length)}</div>
+                          </div>
+                          <div className="bg-[#0F1419] p-3 rounded-xl border border-slate-800">
+                            <div className="text-xs text-slate-400 font-bold uppercase">Tushum</div>
+                            <div className="text-base font-bold text-amber-400 mt-0.5">${stats.totalRevenueUsd}</div>
+                          </div>
+                        </div>
+
+                        {!isEditingProfile && (
+                          <div className="pt-2 border-t border-slate-800/80">
+                            <Button
+                              type="primary"
+                              htmlType="button"
+                              icon={<EditOutlined />}
+                              onClick={() => setIsEditingProfile(true)}
+                              block
+                              className="bg-[#C2703D] hover:bg-[#A85B2D] border-none font-bold rounded-xl text-sm py-2.5 h-11 shadow-md cursor-pointer flex items-center justify-center gap-2"
+                            >
+                              {t('guide.profile.edit_profile')}
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+
                       {/* Commission Banner */}
-                      <div className="bg-[#0F1419] border border-slate-800 p-5 rounded-2xl mb-6 flex items-center justify-between">
+                      <div className="bg-[#0F1419] border border-slate-800 p-5 rounded-2xl flex items-center justify-between">
                         <div>
                           <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">{t('guide.profile.your_commission_rate')}</div>
                           <div className="text-3xl font-black font-serif text-amber-400 mt-1">{profile?.commissionRate || 10}%</div>
@@ -1775,125 +1835,150 @@ export const GuideDashboard: React.FC = () => {
                         </Tooltip>
                       </div>
 
-                      {/* Profile Card & Form (Always open and directly editable) */}
-                      <div className="bg-[#161F28] p-5 rounded-2xl border border-amber-500/30 space-y-4 shadow-xl transition-all">
-                        <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
-                          <span className="text-sm font-bold uppercase text-slate-300 tracking-wider flex items-center gap-1.5">
-                            <EditOutlined className="text-amber-400" /> {t('guide.profile.edit_profile')}
-                          </span>
-                        </div>
-
-                        <Form
-                          form={profileForm}
-                          layout="vertical"
-                          onFinish={handleUpdateProfileSubmit}
-                          className="space-y-4"
-                        >
-                          <Form.Item
-                            name="name"
-                            label={<span className="text-slate-300 text-xs font-semibold">{t('guide.profile.name')} *</span>}
-                            rules={[{ required: true, message: t('guide.profile.name_required') }]}
-                          >
-                            <Input
-                              prefix={<UserOutlined className="text-slate-500 mr-1" />}
-                              placeholder={t('guide.profile.name_placeholder')}
-                              className="bg-[#0F1419] border-slate-800 text-white rounded-xl focus:border-[#C2703D]"
-                            />
-                          </Form.Item>
-
-                          <Row gutter={16}>
-                            <Col span={12}>
-                              <Form.Item
-                                name="phone"
-                                label={<span className="text-slate-300 text-xs font-semibold">{t('guide.profile.phone')}</span>}
-                              >
-                                <Input
-                                  prefix={<PhoneOutlined className="text-slate-500 mr-1" />}
-                                  placeholder="+998 90 123 45 67"
-                                  className="bg-[#0F1419] border-slate-800 text-white rounded-xl focus:border-[#C2703D]"
-                                />
-                              </Form.Item>
-                            </Col>
-                            <Col span={12}>
-                              <Form.Item
-                                name="telegramHandle"
-                                label={<span className="text-slate-300 text-xs font-semibold">{t('guide.profile.telegram')}</span>}
-                              >
-                                <Input
-                                  prefix={<SendOutlined className="text-slate-500 mr-1" />}
-                                  placeholder="@jasur_guide"
-                                  className="bg-[#0F1419] border-slate-800 text-white rounded-xl focus:border-[#C2703D]"
-                                />
-                              </Form.Item>
-                            </Col>
-                          </Row>
-
-                          {/* Avatar Upload */}
-                          <Form.Item
-                            name="avatar"
-                            label={<span className="text-slate-300 text-xs font-semibold">{t('guide.profile.avatar')}</span>}
-                          >
-                            <div className="flex items-center gap-4 bg-[#0F1419] p-4 rounded-2xl border border-slate-800">
-                              <Avatar
-                                size={64}
-                                src={uploadedAvatarUrl || profileForm.getFieldValue('avatar') || profile?.avatar || user?.avatar}
-                                icon={<UserOutlined />}
-                                className="bg-[#C2703D] border-2 border-amber-400 flex-shrink-0 shadow-md"
-                              />
-                              <div className="space-y-1.5 flex-1">
-                                <Upload
-                                  customRequest={async (options) => {
-                                    const { file, onSuccess, onError } = options;
-                                    try {
-                                      const res = await uploadExperienceImages([file as File]);
-                                      const urls = res.data?.urls || (res as any).urls;
-                                      if (res.success && urls && urls.length > 0) {
-                                        const avatarUrl = urls[0];
-                                        setUploadedAvatarUrl(avatarUrl);
-                                        profileForm.setFieldsValue({ avatar: avatarUrl });
-                                        setProfile((prev) => (prev ? { ...prev, avatar: avatarUrl, avatarUrl: avatarUrl } : ({ avatar: avatarUrl, avatarUrl } as any)));
-                                        if (user) updateUser({ ...user, avatar: avatarUrl });
-                                        onSuccess?.(res, file);
-                                        message.success(t('guide.profile.avatar_uploaded'));
-                                      } else {
-                                        throw new Error(res.message || t('guide.profile.upload_error'));
-                                      }
-                                    } catch (err: any) {
-                                      onError?.(err);
-                                      message.error(t('guide.profile.avatar_upload_failed'));
-                                    }
-                                  }}
-                                  showUploadList={false}
-                                  accept="image/*"
-                                >
-                                  <Button
-                                    htmlType="button"
-                                    icon={<UploadOutlined />}
-                                    className="bg-[#161F28] border-slate-700 text-slate-200 hover:border-[#C2703D] rounded-lg text-xs"
-                                  >
-                                    {t('guide.profile.select_new_avatar')}
-                                  </Button>
-                                </Upload>
-                                <div className="text-[11px] text-slate-400">
-                                  {t('guide.profile.avatar_hint')}
-                                </div>
-                              </div>
-                            </div>
-                          </Form.Item>
-
-                          <div className="pt-2 flex items-center gap-3">
+                      {/* Profile Card & Form (Desktop Edit Mode - Only visible when isEditingProfile is true) */}
+                      {isEditingProfile && (
+                        <div className="bg-[#161F28] p-5 rounded-2xl border border-amber-500/30 space-y-4 shadow-xl transition-all">
+                          <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
+                            <span className="text-sm font-bold uppercase text-slate-300 tracking-wider flex items-center gap-1.5">
+                              <EditOutlined className="text-amber-400" /> {t('guide.profile.edit_profile')}
+                            </span>
                             <Button
-                              type="primary"
-                              htmlType="submit"
-                              loading={submitting}
-                              icon={<CheckOutlined />}
-                              className="bg-[#C2703D] hover:bg-[#A85B2D] border-none font-bold rounded-xl px-6 h-10 transition-all cursor-pointer flex items-center gap-2"
+                              type="text"
+                              size="small"
+                              htmlType="button"
+                              onClick={() => setIsEditingProfile(false)}
+                              className="text-slate-400 hover:text-white text-xs"
                             >
-                              {t('guide.profile.save_profile_btn')}
+                              {t('guide.profile.cancel_btn')}
                             </Button>
                           </div>
-                        </Form>
-                      </div>
+
+                          <Form
+                            form={profileForm}
+                            layout="vertical"
+                            initialValues={{
+                              name: profile?.name || user?.name || '',
+                              phone: profile?.phone || user?.phone || '',
+                              telegramHandle: profile?.telegramHandle || (user as any)?.telegramHandle || '',
+                              avatar: profile?.avatar || user?.avatar || '',
+                            }}
+                            onFinish={handleUpdateProfileSubmit}
+                            className="space-y-4"
+                          >
+                            <Form.Item
+                              name="name"
+                              label={<span className="text-slate-300 text-xs font-semibold">{t('guide.profile.name')} *</span>}
+                              rules={[{ required: true, message: t('guide.profile.name_required') }]}
+                            >
+                              <Input
+                                prefix={<UserOutlined className="text-slate-500 mr-1" />}
+                                placeholder={t('guide.profile.name_placeholder')}
+                                className="bg-[#0F1419] border-slate-800 text-white rounded-xl focus:border-[#C2703D]"
+                              />
+                            </Form.Item>
+
+                            <Row gutter={16}>
+                              <Col span={12}>
+                                <Form.Item
+                                  name="phone"
+                                  label={<span className="text-slate-300 text-xs font-semibold">{t('guide.profile.phone')}</span>}
+                                >
+                                  <Input
+                                    prefix={<PhoneOutlined className="text-slate-500 mr-1" />}
+                                    placeholder="+998 90 123 45 67"
+                                    className="bg-[#0F1419] border-slate-800 text-white rounded-xl focus:border-[#C2703D]"
+                                  />
+                                </Form.Item>
+                              </Col>
+                              <Col span={12}>
+                                <Form.Item
+                                  name="telegramHandle"
+                                  label={<span className="text-slate-300 text-xs font-semibold">{t('guide.profile.telegram')}</span>}
+                                >
+                                  <Input
+                                    prefix={<SendOutlined className="text-slate-500 mr-1" />}
+                                    placeholder="@jasur_guide"
+                                    className="bg-[#0F1419] border-slate-800 text-white rounded-xl focus:border-[#C2703D]"
+                                  />
+                                </Form.Item>
+                              </Col>
+                            </Row>
+
+                            {/* Avatar Upload */}
+                            <Form.Item
+                              name="avatar"
+                              label={<span className="text-slate-300 text-xs font-semibold">{t('guide.profile.avatar')}</span>}
+                            >
+                              <div className="flex items-center gap-4 bg-[#0F1419] p-4 rounded-2xl border border-slate-800">
+                                <Avatar
+                                  size={64}
+                                  src={uploadedAvatarUrl || profileForm.getFieldValue('avatar') || profile?.avatar || user?.avatar}
+                                  icon={<UserOutlined />}
+                                  className="bg-[#C2703D] border-2 border-amber-400 flex-shrink-0 shadow-md"
+                                />
+                                <div className="space-y-1.5 flex-1">
+                                  <Upload
+                                    customRequest={async (options) => {
+                                      const { file, onSuccess, onError } = options;
+                                      try {
+                                        const res = await uploadExperienceImages([file as File]);
+                                        const urls = res.data?.urls || (res as any).urls;
+                                        if (res.success && urls && urls.length > 0) {
+                                          const avatarUrl = urls[0];
+                                          setUploadedAvatarUrl(avatarUrl);
+                                          profileForm.setFieldsValue({ avatar: avatarUrl });
+                                          setProfile((prev) => (prev ? { ...prev, avatar: avatarUrl, avatarUrl: avatarUrl } : ({ avatar: avatarUrl, avatarUrl } as any)));
+                                          if (user) updateUser({ ...user, avatar: avatarUrl });
+                                          onSuccess?.(res, file);
+                                          message.success(t('guide.profile.avatar_uploaded'));
+                                        } else {
+                                          throw new Error(res.message || t('guide.profile.upload_error'));
+                                        }
+                                      } catch (err: any) {
+                                        onError?.(err);
+                                        message.error(t('guide.profile.avatar_upload_failed'));
+                                      }
+                                    }}
+                                    showUploadList={false}
+                                    accept="image/*"
+                                  >
+                                    <Button
+                                      htmlType="button"
+                                      icon={<UploadOutlined />}
+                                      className="bg-[#161F28] border-slate-700 text-slate-200 hover:border-[#C2703D] rounded-lg text-xs"
+                                    >
+                                      {t('guide.profile.select_new_avatar')}
+                                    </Button>
+                                  </Upload>
+                                  <div className="text-[11px] text-slate-400">
+                                    {t('guide.profile.avatar_hint')}
+                                  </div>
+                                </div>
+                              </div>
+                            </Form.Item>
+
+                            <div className="pt-2 flex items-center gap-3">
+                              <Button
+                                type="primary"
+                                htmlType="submit"
+                                loading={submitting}
+                                icon={<CheckOutlined />}
+                                className="bg-[#C2703D] hover:bg-[#A85B2D] border-none font-bold rounded-xl px-6 h-10 transition-all cursor-pointer flex items-center gap-2"
+                              >
+                                {t('guide.profile.save_profile_btn')}
+                              </Button>
+                              <Button
+                                type="default"
+                                htmlType="button"
+                                onClick={() => setIsEditingProfile(false)}
+                                className="border-slate-700 text-slate-300 hover:text-white rounded-xl h-10"
+                              >
+                                {t('guide.profile.cancel_btn')}
+                              </Button>
+                            </div>
+                          </Form>
+                        </div>
+                      )}
                     </div>
                   ),
                 },

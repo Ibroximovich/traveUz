@@ -39,76 +39,7 @@ async function ensureGuideUserExists(guideId: string) {
 }
 
 // In-memory Dev Store for instant testing when DB is offline.
-// Notice: initial mock experiences belong strictly to 'google-mock-guide-123'
-export const mockExperiencesStore: any[] = [
-  {
-    id: 'exp-mock-1',
-    title: "Samarqand Registon va Afrosiyob Bo'ylab Tarixiy Sayohat",
-    title_uz: "Samarqand Registon va Afrosiyob Bo'ylab Tarixiy Sayohat",
-    title_en: "Historical Tour of Samarkand Registan & Afrasiab",
-    title_ru: "Исторический тур по Самарканду: Регистан и Афрасиаб",
-    description: "Samarqandning durdonasi bo'lmish Registon maydoni, Gur-Amir maqbarasi hamda qadimiy Afrosiyob muzeyiga maxsus mualliflik ekskursiyasi.",
-    description_uz: "Samarqandning durdonasi bo'lmish Registon maydoni, Gur-Amir maqbarasi hamda qadimiy Afrosiyob muzeyiga maxsus mualliflik ekskursiyasi.",
-    description_en: "Author's special guided tour through the pearl of Samarkand: Registan Square, Gur-e-Amir Mausoleum, and the ancient Afrasiab Museum.",
-    description_ru: "Авторская экскурсия по жемчужине Самарканда: площади Регистан, мавзолею Гур-Эмир и древнему музею Афрасиаб.",
-    city: 'Samarqand',
-    price: 25,
-    priceUsd: 25,
-    priceUzs: 320000,
-    durationHours: 3,
-    duration: '3 soat',
-    meetingPoint: 'Registon maydoni markaziy kassa oldi',
-    meetingPointText: 'Registon maydoni markaziy kassa oldi',
-    meetingPointText_uz: 'Registon maydoni markaziy kassa oldi',
-    meetingPointText_en: 'In front of Registan Square main ticket box',
-    meetingPointText_ru: 'Перед центральной кассой площади Регистан',
-    languages: ["O'zbekcha", 'Ruscha', 'Inglizcha'],
-    images: ['https://images.unsplash.com/photo-1590076215667-873d96c8913c?auto=format&fit=crop&w=800&q=80'],
-    isActive: true,
-    guideId: 'google-mock-guide-123',
-    guide: { id: 'google-mock-guide-123', name: 'Samarqand Gidi - Jasur', avatar: null, email: 'guide@tripuz.uz' },
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    _count: { bookings: 5, availableDates: 2 },
-    availableDates: [
-      { id: 'date-mock-1', experienceId: 'exp-mock-1', date: new Date(Date.now() + 86400000), slots: 8 },
-      { id: 'date-mock-2', experienceId: 'exp-mock-1', date: new Date(Date.now() + 172800000), slots: 10 },
-    ],
-  },
-  {
-    id: 'exp-mock-2',
-    title: "Buxoro Ko'hna Shahar va Ark Qal'asi Turi",
-    title_uz: "Buxoro Ko'hna Shahar va Ark Qal'asi Turi",
-    title_en: "Bukhara Old City & Ark Citadel Walking Tour",
-    title_ru: "Пешая экскурсия по Старому городу Бухары и крепости Арк",
-    description: "Ipak yo'li yuragi bo'lmish Buxoro shahrining qadimiy minorasi, Labi Hovuz va Ark qal'asiga unutilmas sayohat.",
-    description_uz: "Ipak yo'li yuragi bo'lmish Buxoro shahrining qadimiy minorasi, Labi Hovuz va Ark qal'asiga unutilmas sayohat.",
-    description_en: "An unforgettable journey to the ancient minaret, Lyabi-Hauz, and the Ark Citadel in the heart of the Silk Road — Bukhara.",
-    description_ru: "Незабываемое путешествие к древнему минарету, Ляби-Хауз и крепости Арк в сердце Шелкового пути — Бухаре.",
-    city: 'Buxoro',
-    price: 30,
-    priceUsd: 30,
-    priceUzs: 384000,
-    durationHours: 4,
-    duration: '4 soat',
-    meetingPoint: 'Labi Hovuz ansambli',
-    meetingPointText: 'Labi Hovuz ansambli',
-    meetingPointText_uz: 'Labi Hovuz ansambli',
-    meetingPointText_en: 'Lyabi-Hauz Ensemble',
-    meetingPointText_ru: 'Ансамбль Ляби-Хауз',
-    languages: ["O'zbekcha", 'Inglizcha'],
-    images: ['https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?auto=format&fit=crop&w=800&q=80'],
-    isActive: true,
-    guideId: 'google-mock-guide-123',
-    guide: { id: 'google-mock-guide-123', name: 'Samarqand Gidi - Jasur', avatar: null, email: 'guide@tripuz.uz' },
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    _count: { bookings: 2, availableDates: 1 },
-    availableDates: [
-      { id: 'date-mock-3', experienceId: 'exp-mock-2', date: new Date(Date.now() + 259200000), slots: 6 },
-    ],
-  },
-];
+export const mockExperiencesStore: any[] = [];
 
 // In-memory mock guide profile store (persists during server session)
 export const mockGuideProfileStore: Record<string, any> = {};

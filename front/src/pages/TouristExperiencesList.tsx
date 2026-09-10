@@ -6,6 +6,7 @@ import {
   Card,
   Button,
   Tag,
+  Avatar,
   Select,
   Empty,
   Skeleton,
@@ -19,12 +20,14 @@ import {
   ArrowRightOutlined,
   FilterOutlined,
   UserOutlined,
+  CalendarOutlined,
 } from '@ant-design/icons';
+import dayjs from 'dayjs';
 import { TouristHeader } from '../components/TouristHeader';
 import { ExperienceImageSlider } from './GuideDashboard';
 import { getPublicExperiences } from '../services/tourist.api';
 import type { Experience } from '../types/experience';
-import { getExpTitle, getExpDescription } from '../types/experience';
+import { getExpTitle, getExpDescription, formatLanguageName } from '../types/experience';
 
 const USD_TO_UZS_RATE = 12800;
 
@@ -240,12 +243,32 @@ export const TouristExperiencesList: React.FC = () => {
                         </div>
                       </div>
 
+                      {/* Nearest Date Chip */}
+                      {exp.availableDates && exp.availableDates.length > 0 && (
+                        <div className="flex items-center gap-2 bg-[#0F1419] p-2.5 rounded-xl border border-amber-500/25 text-amber-300 text-xs">
+                          <CalendarOutlined className="text-amber-400 flex-shrink-0" />
+                          <span>{t('common.nearest_date')}: <strong className="text-white font-semibold">{dayjs(exp.availableDates[0].date).format('DD.MM.YYYY')}</strong></span>
+                        </div>
+                      )}
+
+                      {/* Language Chips */}
+                      <div className="flex items-center gap-1.5 flex-wrap text-xs pt-1">
+                        {(Array.isArray(exp.languages) ? exp.languages : ["O'zbekcha"]).map((lang, idx) => (
+                          <span key={idx} className="inline-flex items-center gap-1 bg-[#0F1419] px-2.5 py-1 rounded-xl border border-slate-800 text-slate-300 text-[11px]">
+                            🌐 {formatLanguageName(lang, t)}
+                          </span>
+                        ))}
+                      </div>
+
                       {/* Guide Name and View Details CTA */}
                       <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2.5">
-                          <div className="w-7 h-7 rounded-full bg-[#C2703D] flex items-center justify-center text-xs text-white font-bold flex-shrink-0">
-                            <UserOutlined />
-                          </div>
+                          <Avatar
+                            size={28}
+                            src={(exp as any).guide?.avatarUrl || (exp as any).guide?.avatar}
+                            icon={<UserOutlined />}
+                            className="bg-[#C2703D] border border-amber-400/60 flex-shrink-0"
+                          />
                           <span className="text-xs sm:text-sm text-slate-200 font-semibold truncate max-w-[130px]">
                             {(exp as any).guide?.name || t('common.local_guide')}
                           </span>

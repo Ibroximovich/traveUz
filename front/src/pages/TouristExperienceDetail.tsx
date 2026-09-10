@@ -23,7 +23,7 @@ import dayjs from 'dayjs';
 import { TouristHeader } from '../components/TouristHeader';
 import { getPublicExperienceById } from '../services/tourist.api';
 import type { Experience, AvailableDate } from '../types/experience';
-import { getExpTitle, getExpDescription, getExpMeetingPoint } from '../types/experience';
+import { getExpTitle, getExpDescription, getExpMeetingPoint, formatLanguageName } from '../types/experience';
 
 const USD_TO_UZS_RATE = 12800;
 
@@ -210,7 +210,7 @@ export const TouristExperienceDetail: React.FC = () => {
                 </div>
                 {(Array.isArray(experience.languages) ? experience.languages : ["O'zbekcha"]).map((lang, idx) => (
                   <div key={idx} className="flex items-center gap-1.5 bg-[#161F28] px-3.5 py-2 rounded-2xl border border-slate-800 text-slate-200">
-                    <span>🌐 {lang}</span>
+                    <span>🌐 {formatLanguageName(lang, t)}</span>
                   </div>
                 ))}
               </div>

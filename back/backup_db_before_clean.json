@@ -1,0 +1,286 @@
+{
+  "timestamp": "2026-09-10T10:49:50.742Z",
+  "counts": {
+    "users": 9,
+    "experiences": 2,
+    "bookings": 5,
+    "availableDates": 2
+  },
+  "users": [
+    {
+      "id": "cmtrkfwi00000142lsnezn5aw",
+      "email": "admin@tripuz.uz",
+      "name": "Tripuz Admin",
+      "avatar": "https://ui-avatars.com/api/?name=Admin&background=6366f1&color=fff",
+      "isCustomAvatarUploaded": false,
+      "phone": null,
+      "telegramHandle": null,
+      "commissionRate": 15,
+      "role": "ADMIN",
+      "createdAt": "2026-09-07T18:20:18.889Z",
+      "updatedAt": "2026-09-07T18:20:18.889Z"
+    },
+    {
+      "id": "cmtrkfwia0002142ln3ho08w5",
+      "email": "tourist@example.com",
+      "name": "Ali Valiyev",
+      "avatar": "https://ui-avatars.com/api/?name=Ali&background=f59e0b&color=fff",
+      "isCustomAvatarUploaded": false,
+      "phone": null,
+      "telegramHandle": null,
+      "commissionRate": 15,
+      "role": "TOURIST",
+      "createdAt": "2026-09-07T18:20:18.899Z",
+      "updatedAt": "2026-09-07T18:20:18.899Z"
+    },
+    {
+      "id": "cmtrlv0kp0003mfrn4haoio4b",
+      "email": "tourist@tripuz.uz",
+      "name": "Sayohatchi - Jasur",
+      "avatar": "https://ui-avatars.com/api/?name=Jasur+Tourist&background=6366f1&color=fff&size=128",
+      "isCustomAvatarUploaded": false,
+      "phone": null,
+      "telegramHandle": null,
+      "commissionRate": 15,
+      "role": "TOURIST",
+      "createdAt": "2026-09-07T19:00:03.576Z",
+      "updatedAt": "2026-09-09T17:10:49.969Z"
+    },
+    {
+      "id": "cmtrmbiyq0001ry0bvoc5ffw3",
+      "email": "azamovsarvar555@gmail.com",
+      "name": "Sarvar Azamov",
+      "avatar": "/uploads/exp-6d8fdb54-1dc7-445f-8693-40b2c87ce545.png",
+      "isCustomAvatarUploaded": true,
+      "phone": "",
+      "telegramHandle": "",
+      "commissionRate": 10,
+      "role": "TOURIST",
+      "createdAt": "2026-09-07T19:12:53.791Z",
+      "updatedAt": "2026-09-10T10:23:26.809Z"
+    },
+    {
+      "id": "test-dateless-guide",
+      "email": "guide-testdateless@tripuz.uz",
+      "name": "Gid Foydalanuvchi",
+      "avatar": null,
+      "isCustomAvatarUploaded": false,
+      "phone": null,
+      "telegramHandle": null,
+      "commissionRate": 10,
+      "role": "GUIDE",
+      "createdAt": "2026-09-10T10:44:54.345Z",
+      "updatedAt": "2026-09-10T10:44:54.345Z"
+    },
+    {
+      "id": "cmtufwk2z000710v9vl1w954x",
+      "email": "azzamovsarvar61@gmail.com",
+      "name": "Sarvar Azzamov",
+      "avatar": "https://lh3.googleusercontent.com/a/ACg8ocIlFlbr2PD2b6sEywRK9P8i85rRz0r01AvPitSN8fwOZYjFqQ=s96-c",
+      "isCustomAvatarUploaded": false,
+      "phone": null,
+      "telegramHandle": null,
+      "commissionRate": 10,
+      "role": "TOURIST",
+      "createdAt": "2026-09-09T18:36:36.395Z",
+      "updatedAt": "2026-09-09T18:55:19.684Z"
+    },
+    {
+      "id": "test-guide-user-123",
+      "email": "guide-testguideuse@tripuz.uz",
+      "name": "Jasur Rahimov Test",
+      "avatar": "/uploads/test.png",
+      "isCustomAvatarUploaded": true,
+      "phone": "+998 90 999 88 77",
+      "telegramHandle": "@jasur_test_tg",
+      "commissionRate": 10,
+      "role": "GUIDE",
+      "createdAt": "2026-09-10T09:51:03.259Z",
+      "updatedAt": "2026-09-10T09:51:03.263Z"
+    },
+    {
+      "id": "cmtrkfwi80001142l4qxu7lf5",
+      "email": "guide@tripuz.uz",
+      "name": "Samarqand Gidi - Jasur",
+      "avatar": "https://ui-avatars.com/api/?name=Jasur+Gid&background=10b981&color=fff&size=128",
+      "isCustomAvatarUploaded": true,
+      "phone": "+998-97-192-14-15",
+      "telegramHandle": "nfvxgfx",
+      "commissionRate": 10,
+      "role": "GUIDE",
+      "createdAt": "2026-09-07T18:20:18.897Z",
+      "updatedAt": "2026-09-10T09:51:54.000Z"
+    },
+    {
+      "id": "google-mock-guide-123",
+      "email": "alijon@gmail.com",
+      "name": "Samarqand Gidi - Jasur",
+      "avatar": "https://ui-avatars.com/api/?name=Jasur+Gid&background=10b981&color=fff&size=128",
+      "isCustomAvatarUploaded": true,
+      "phone": "+998-97-192-14-15",
+      "telegramHandle": "sarvarazamov2006",
+      "commissionRate": 10,
+      "role": "TOURIST",
+      "createdAt": "2026-09-08T12:28:18.863Z",
+      "updatedAt": "2026-09-10T10:00:41.282Z"
+    }
+  ],
+  "experiences": [
+    {
+      "id": "cmtsmoea00001sf77ks5rdbbc",
+      "title": "gqxhggh",
+      "title_uz": null,
+      "title_en": null,
+      "title_ru": null,
+      "description": "fegjgyfbh",
+      "description_uz": null,
+      "description_en": null,
+      "description_ru": null,
+      "city": "Samarqand",
+      "price": "25",
+      "priceUsd": "25",
+      "priceUzs": "320000",
+      "duration": "3 soat",
+      "durationHours": 3,
+      "meetingPoint": "werffff",
+      "meetingPointText": "werffff",
+      "meetingPointText_uz": null,
+      "meetingPointText_en": null,
+      "meetingPointText_ru": null,
+      "meetingPointMapUrl": "https://yandex.uz/maps/org/registon_me_moriy_majmuasi/1223343165/?ll=66.975709%2C39.654941&mode=search&sll=67.275451%2C37.228581&sspn=0.174408%2C0.083732&text=registon&z=17",
+      "languages": [
+        "O'zbekcha",
+        "Inglizcha"
+      ],
+      "images": [
+        "/uploads/exp-54f31ace-697e-4ca1-9e1b-9ab3975360fb.png",
+        "/uploads/exp-1633ecf5-2c64-4ffa-9098-54d1bea04ca3.png"
+      ],
+      "isActive": true,
+      "guideId": "cmtrkfwi80001142l4qxu7lf5",
+      "createdAt": "2026-09-08T12:10:40.583Z",
+      "updatedAt": "2026-09-08T21:11:29.063Z"
+    },
+    {
+      "id": "cmtvd9vsx0003117yjs0mcaok",
+      "title": "samarqand registon",
+      "title_uz": "samarqand registon",
+      "title_en": "samarqand registon",
+      "title_ru": "samarqand registon",
+      "description": "3,jhkhgrghbhjb",
+      "description_uz": "3,jhkhgrghbhjb",
+      "description_en": "3,jhkhgrghbhjb",
+      "description_ru": "3,jhkhgrghbhjb",
+      "city": "Samarqand",
+      "price": "25",
+      "priceUsd": "25",
+      "priceUzs": "320000",
+      "duration": "3 soat",
+      "durationHours": 3,
+      "meetingPoint": "registon",
+      "meetingPointText": "registon",
+      "meetingPointText_uz": "registon",
+      "meetingPointText_en": "registon",
+      "meetingPointText_ru": "registon",
+      "meetingPointMapUrl": "https://yandex.uz/maps/org/registon_me_moriy_majmuasi/1223343165/?ll=66.975709%2C39.654941&mode=search&sll=67.275451%2C37.228581&sspn=0.174408%2C0.083732&text=registon&z=17",
+      "languages": [
+        "O'zbekcha",
+        "Inglizcha"
+      ],
+      "images": [
+        "/uploads/exp-61f23de9-6197-473e-98fb-7782f8b6361b.png"
+      ],
+      "isActive": true,
+      "guideId": "cmtrmbiyq0001ry0bvoc5ffw3",
+      "createdAt": "2026-09-10T10:10:45.441Z",
+      "updatedAt": "2026-09-10T10:10:45.441Z"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "cmtsnbxw80003rr1f1x45h2rl",
+      "userId": "google-mock-guide-123",
+      "experienceId": "cmtsmoea00001sf77ks5rdbbc",
+      "dateId": "cmtsnbsmb000111335y05ey4v",
+      "participantsCount": 2,
+      "totalPrice": "55",
+      "status": "CANCELLED",
+      "paymentStatus": "PENDING",
+      "voucherCode": "TRP-3AE769C1",
+      "createdAt": "2026-09-08T12:28:59.097Z",
+      "updatedAt": "2026-09-08T21:50:03.075Z"
+    },
+    {
+      "id": "cmtsnmh9t0007rr1f4uce3gbp",
+      "userId": "google-mock-guide-123",
+      "experienceId": "cmtsmoea00001sf77ks5rdbbc",
+      "dateId": "cmtsnbsmb000111335y05ey4v",
+      "participantsCount": 2,
+      "totalPrice": "55",
+      "status": "CANCELLED",
+      "paymentStatus": "PENDING",
+      "voucherCode": "TRP-CF7E30A9",
+      "createdAt": "2026-09-08T12:37:10.769Z",
+      "updatedAt": "2026-09-09T16:59:57.248Z"
+    },
+    {
+      "id": "cmtsnyn2o0002grwv4wa0lml4",
+      "userId": "google-mock-guide-123",
+      "experienceId": "cmtsmoea00001sf77ks5rdbbc",
+      "dateId": "cmtsnbsmb000111335y05ey4v",
+      "participantsCount": 1,
+      "totalPrice": "27.5",
+      "status": "CONFIRMED",
+      "paymentStatus": "PENDING",
+      "voucherCode": "TRP-1EE9EB36",
+      "createdAt": "2026-09-08T12:46:38.161Z",
+      "updatedAt": "2026-09-09T17:25:39.588Z"
+    },
+    {
+      "id": "cmtt7l9jh0002iuugqqum7htm",
+      "userId": "cmtrlv0kp0003mfrn4haoio4b",
+      "experienceId": "cmtsmoea00001sf77ks5rdbbc",
+      "dateId": "cmtsnbsmb000111335y05ey4v",
+      "participantsCount": 1,
+      "totalPrice": "27.5",
+      "status": "CANCELLED",
+      "paymentStatus": "PENDING",
+      "voucherCode": "TRP-518F87BA",
+      "createdAt": "2026-09-08T21:56:06.413Z",
+      "updatedAt": "2026-09-09T17:25:44.849Z"
+    },
+    {
+      "id": "cmtvdp5iy0005mej8ho5wh5rb",
+      "userId": "cmtrmbiyq0001ry0bvoc5ffw3",
+      "experienceId": "cmtvd9vsx0003117yjs0mcaok",
+      "dateId": "cmtvda1wn0005117y0oroi5gm",
+      "participantsCount": 1,
+      "totalPrice": "27.5",
+      "status": "CONFIRMED",
+      "paymentStatus": "PENDING",
+      "voucherCode": "TRP-C1D9B7E8",
+      "createdAt": "2026-09-10T10:22:37.882Z",
+      "updatedAt": "2026-09-10T10:23:12.062Z"
+    }
+  ],
+  "availableDates": [
+    {
+      "id": "cmtsnbsmb000111335y05ey4v",
+      "experienceId": "cmtsmoea00001sf77ks5rdbbc",
+      "date": "2026-09-09T12:28:52.248Z",
+      "slots": 4,
+      "maxCapacity": 10,
+      "bookedCount": 6,
+      "createdAt": "2026-09-08T12:28:52.260Z"
+    },
+    {
+      "id": "cmtvda1wn0005117y0oroi5gm",
+      "experienceId": "cmtvd9vsx0003117yjs0mcaok",
+      "date": "2026-09-11T10:00:00.000Z",
+      "slots": 9,
+      "maxCapacity": 10,
+      "bookedCount": 1,
+      "createdAt": "2026-09-10T10:10:53.351Z"
+    }
+  ]
+}

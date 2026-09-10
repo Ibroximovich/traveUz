@@ -283,7 +283,7 @@ export const Login: React.FC = () => {
 
       {/* Top Navigation */}
       <header className="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between z-10">
-        <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate('/')}>
+        <div className="flex items-center gap-3 cursor-pointer group">
           <div
             className={`w-11 h-11 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-500 ${
               isGuideMode
@@ -297,12 +297,6 @@ export const Login: React.FC = () => {
             <span className="text-2xl font-black font-serif tracking-wide text-white">
               TRIPUZ
             </span>
-            <Tag
-              color={isGuideMode ? 'amber' : 'gold'}
-              className="ml-2 border.none font-medium px-2 py-0.5 rounded-full text-xs bg-amber-500/10 text-amber-300 border border-amber-500/20"
-            >
-              {isGuideMode ? t('auth.guide_portal') : t('auth.tourist_portal')}
-            </Tag>
           </div>
         </div>
 
@@ -366,43 +360,6 @@ export const Login: React.FC = () => {
             <p className="text-slate-400 text-base leading-relaxed max-w-md">
               {isGuideMode ? t('auth.hero_guide_subtitle') : t('auth.hero_tourist_subtitle')}
             </p>
-
-            {/* Hero Statistics Counters */}
-            <div className="p-4 rounded-2xl bg-[#161F28]/80 border border-slate-800/80 backdrop-blur-md shadow-xl my-6">
-              <div className="grid grid-cols-3 divide-x divide-slate-800/90 text-center">
-                {isGuideMode ? (
-                  <>
-                    <div className="px-3">
-                      <div className="text-2xl xl:text-3xl font-extrabold text-[#D4AF37] font-serif">100+</div>
-                      <div className="text-slate-400 text-xs mt-1 font-medium">{t('auth.stat_active_guides')}</div>
-                    </div>
-                    <div className="px-3">
-                      <div className="text-2xl xl:text-3xl font-extrabold text-[#C2703D] font-serif">15%</div>
-                      <div className="text-slate-400 text-xs mt-1 font-medium">{t('auth.stat_fair_commission')}</div>
-                    </div>
-                    <div className="px-3">
-                      <div className="text-2xl xl:text-3xl font-extrabold text-amber-400 font-serif">24/7</div>
-                      <div className="text-slate-400 text-xs mt-1 font-medium">{t('auth.stat_auto_payment')}</div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="px-3">
-                      <div className="text-2xl xl:text-3xl font-extrabold text-[#D4AF37] font-serif">500+</div>
-                      <div className="text-slate-400 text-xs mt-1 font-medium">{t('auth.stat_unique_tours')}</div>
-                    </div>
-                    <div className="px-3">
-                      <div className="text-2xl xl:text-3xl font-extrabold text-[#C2703D] font-serif">4.9 ★</div>
-                      <div className="text-slate-400 text-xs mt-1 font-medium">{t('auth.stat_guide_rating')}</div>
-                    </div>
-                    <div className="px-3">
-                      <div className="text-2xl xl:text-3xl font-extrabold text-emerald-400 font-serif">100%</div>
-                      <div className="text-slate-400 text-xs mt-1 font-medium">{t('auth.stat_guaranteed')}</div>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
 
             {/* Feature Checkmarks */}
             <div className="space-y-3 pt-1">
@@ -505,46 +462,6 @@ export const Login: React.FC = () => {
 
                 <div className="text-center text-[11px] text-slate-500 px-2 leading-relaxed">
                   {t('auth.terms_agree')}
-                </div>
-
-                {/* Subdued Dev Mode Toolbox */}
-                <div className="mt-6 pt-4 border-t border-slate-800/80">
-                  <div className="bg-[#0F1419]/90 border border-slate-800/60 rounded-xl p-3 space-y-2">
-                    <div className="flex items-center justify-between text-[11px]">
-                      <span className="text-slate-400 font-medium flex items-center gap-1.5">
-                        <Tag color="default" className="m-0 text-[9px] uppercase font-mono bg-slate-800 text-slate-400 border-none">
-                          Dev Mode
-                        </Tag>
-                        {t('auth.dev_mode_label')}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => setShowDevModal(true)}
-                        className="text-[10px] text-amber-400 hover:text-amber-300 underline flex items-center gap-1 transition-colors"
-                      >
-                        <KeyOutlined /> Token
-                      </button>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2 pt-1">
-                      <Button
-                        size="small"
-                        loading={loading}
-                        onClick={() => handleQuickDevLogin('TOURIST')}
-                        className="h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700 text-[11px] font-medium flex items-center justify-center gap-1"
-                      >
-                        {t('auth.mock_tourist')}
-                      </Button>
-                      <Button
-                        size="small"
-                        loading={loading}
-                        onClick={() => handleQuickDevLogin('GUIDE')}
-                        className="h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700 text-[11px] font-medium flex items-center justify-center gap-1"
-                      >
-                        {t('auth.mock_guide')}
-                      </Button>
-                    </div>
-                  </div>
                 </div>
               </div>
             </Card>

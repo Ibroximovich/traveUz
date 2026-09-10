@@ -21,6 +21,11 @@
     "logout_cancel": "Bekor qilish",
     "logout_success": "Tizimdan chiqdingiz"
   },
+  "languages": {
+    "uz": "O'zbekcha",
+    "en": "Inglizcha",
+    "ru": "Ruscha"
+  },
   "common": {
     "save": "Saqlash",
     "cancel": "Bekor qilish",
@@ -62,7 +67,8 @@
     "connection_error": "Server bilan ulanishda xatolik yuz berdi.",
     "load_failed": "Ma'lumot yuklanmadi, qayta urinib ko'ring",
     "spots_count": "{{count}} ta",
-    "payment_pending": "To'lov kutilmoqda"
+    "payment_pending": "To'lov kutilmoqda",
+    "nearest_date": "Eng yaqin sana"
   },
   "meta": {
     "home_title": "Tripuz — O'zbekistonda Ekskursiyalar",

@@ -69,6 +69,25 @@ export function getExpMeetingPoint(exp: Partial<Experience> | undefined | null, 
   return exp.meetingPointText_uz || exp.meetingPointText || exp.meetingPoint || '';
 }
 
+export function formatLanguageName(lang: string, t: (key: string, options?: any) => string): string {
+  if (!lang) return '';
+  const clean = lang.trim();
+  const mapKey: Record<string, string> = {
+    "O'zbekcha": 'languages.uz',
+    'Uzbek': 'languages.uz',
+    'uz': 'languages.uz',
+    'Inglizcha': 'languages.en',
+    'English': 'languages.en',
+    'en': 'languages.en',
+    'Ruscha': 'languages.ru',
+    'Russian': 'languages.ru',
+    'ru': 'languages.ru',
+  };
+  const key = mapKey[clean] || `languages.${clean}`;
+  const val = t(key, { defaultValue: clean });
+  return val !== key ? val : clean;
+}
+
 export interface CreateExperienceDto {
   title: string;
   description: string;

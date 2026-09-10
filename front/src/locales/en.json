@@ -21,6 +21,11 @@
     "logout_cancel": "Cancel",
     "logout_success": "You have been signed out"
   },
+  "languages": {
+    "uz": "Uzbek",
+    "en": "English",
+    "ru": "Russian"
+  },
   "common": {
     "save": "Save",
     "cancel": "Cancel",
@@ -62,7 +67,8 @@
     "connection_error": "Could not connect to server.",
     "load_failed": "Failed to load data, please try again",
     "spots_count": "{{count}}",
-    "payment_pending": "Payment pending"
+    "payment_pending": "Payment pending",
+    "nearest_date": "Nearest date"
   },
   "meta": {
     "home_title": "Tripuz — Tours in Uzbekistan",

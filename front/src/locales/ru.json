@@ -21,6 +21,11 @@
     "logout_cancel": "Отмена",
     "logout_success": "Вы вышли из системы"
   },
+  "languages": {
+    "uz": "Узбекский",
+    "en": "Английский",
+    "ru": "Русский"
+  },
   "common": {
     "save": "Сохранить",
     "cancel": "Отмена",
@@ -62,7 +67,8 @@
     "connection_error": "Не удалось подключиться к серверу.",
     "load_failed": "Не удалось загрузить данные, попробуйте снова",
     "spots_count": "{{count}}",
-    "payment_pending": "Ожидается оплата"
+    "payment_pending": "Ожидается оплата",
+    "nearest_date": "Ближайшая дата"
   },
   "meta": {
     "home_title": "Tripuz — Экскурсии в Узбекистане",
