@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button, Input, Alert, message, Tag, Modal, Select, Segmented } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -37,10 +37,59 @@ export const Login: React.FC = () => {
     () => localStorage.getItem('tripuz_lang') || i18n.language || 'uz'
   );
 
+  // Keep track of latest selectedRole in a ref to avoid re-initializing Google GIS on role change
+  const selectedRoleRef = useRef(selectedRole);
+  useEffect(() => {
+    selectedRoleRef.current = selectedRole;
+  }, [selectedRole]);
+
+  // Track if Google Identity Services has already been initialized
+  const isGisInitialized = useRef(false);
+
   // Set page title
   useEffect(() => {
     document.title = t('meta.login_title');
   }, [t]);
+
+  // Initialize Google Identity Services (GIS) ONLY ONCE on mount
+  useEffect(() => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    if (!clientId || clientId.includes('dummy')) return;
+
+    const initGis = () => {
+      if (window.google?.accounts?.id && !isGisInitialized.current) {
+        try {
+          isGisInitialized.current = true;
+          window.google.accounts.id.initialize({
+            client_id: clientId,
+            auto_select: false,
+            callback: async (response: any) => {
+              if (response && response.credential) {
+                await handleGoogleAuth(response.credential, selectedRoleRef.current);
+              } else {
+                setLoading(false);
+              }
+            },
+          });
+        } catch (err) {
+          console.error('Failed to initialize Google Identity Services:', err);
+          isGisInitialized.current = false;
+        }
+      }
+    };
+
+    if (window.google?.accounts?.id) {
+      initGis();
+    } else {
+      const timer = setInterval(() => {
+        if (window.google?.accounts?.id) {
+          initGis();
+          clearInterval(timer);
+        }
+      }, 300);
+      return () => clearInterval(timer);
+    }
+  }, []);
 
   /**
    * Change application language preference — also triggers i18n.changeLanguage
@@ -67,6 +116,7 @@ export const Login: React.FC = () => {
 
     try {
       const response = await googleLogin(idToken, targetRole);
+      console.log("YUBorilayotgan token:", response);
 
       if (response.success && response.data) {
         const { user, accessToken, refreshToken, tokens } = response.data;
@@ -113,7 +163,7 @@ export const Login: React.FC = () => {
   };
 
   /**
-   * Native Google Identity Services (GIS) Sign-In Trigger with prompt: 'select_account'
+   * Native Google Identity Services (GIS) Sign-In Trigger with prompt
    */
   const handleRealGoogleLogin = () => {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -125,7 +175,7 @@ export const Login: React.FC = () => {
       return;
     }
 
-    if (!window.google || !window.google.accounts) {
+    if (!window.google || !window.google.accounts || !window.google.accounts.id) {
       message.error(t('auth.google_sdk_loading'));
       return;
     }
@@ -133,29 +183,37 @@ export const Login: React.FC = () => {
     setLoading(true);
     setErrorMessage(null);
 
-    try {
-      if (window.google?.accounts?.id) {
+    // Fallback: initialize if not already initialized
+    if (!isGisInitialized.current) {
+      try {
+        isGisInitialized.current = true;
         window.google.accounts.id.initialize({
           client_id: clientId,
           auto_select: false,
           callback: async (response: any) => {
             if (response && response.credential) {
-              await handleGoogleAuth(response.credential, selectedRole);
+              await handleGoogleAuth(response.credential, selectedRoleRef.current);
             } else {
               setLoading(false);
             }
           },
         });
-
-        window.google.accounts.id.prompt((notification: any) => {
-          if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-            setLoading(false);
-          }
-        });
-      } else {
-        setLoading(false);
-        message.error(t('auth.google_sdk_loading'));
+      } catch (err) {
+        console.error('Google GIS Init error:', err);
+        isGisInitialized.current = false;
       }
+    }
+
+    try {
+      window.google.accounts.id.prompt((notification: any) => {
+        if (
+          notification.isNotDisplayed() ||
+          notification.isSkippedMoment() ||
+          notification.isDismissedMoment()
+        ) {
+          setLoading(false);
+        }
+      });
     } catch (err) {
       console.error('Google GIS Error:', err);
       setLoading(false);
