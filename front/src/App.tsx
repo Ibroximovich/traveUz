@@ -26,9 +26,9 @@ export const App: React.FC = () => {
         theme={{
           algorithm: theme.darkAlgorithm,
           token: {
-            colorPrimary: '#c2703d', // Terracotta primary accent
-            colorBgBase: '#0f1419', // Deep night sky base
-            colorTextBase: '#f5f5f0', // Warm off-white
+            colorPrimary: '#c2703d',
+            colorBgBase: '#0f1419',
+            colorTextBase: '#f5f5f0',
             borderRadius: 12,
             fontFamily: "'Plus Jakarta Sans', system-ui, -apple-system, sans-serif",
           },
@@ -44,7 +44,10 @@ export const App: React.FC = () => {
             <Route path="/guide/dashboard" element={<GuideDashboard />} />
 
             {/* Tourist Catalog & List Routes */}
-            <Route path="/" element={<TouristHome />} />
+            {/* 1-usul: '/' ga kirganda to'g'ridan-to'g'ri login-ga yo'naltiramiz */}
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            
+            <Route path="/home" element={<TouristHome />} /> {/* Agar TouristHome ham kerak bo'lsa */}
             <Route path="/experiences" element={<TouristExperiencesList />} />
             <Route path="/experiences/:id" element={<TouristExperienceDetail />} />
 
@@ -53,7 +56,7 @@ export const App: React.FC = () => {
             <Route path="/my-bookings" element={<TouristMyBookings />} />
 
             {/* Fallback route */}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </BrowserRouter>
       </ConfigProvider>
