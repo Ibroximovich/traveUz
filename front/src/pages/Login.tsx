@@ -116,7 +116,7 @@ export const Login: React.FC = () => {
 
     try {
       const response = await googleLogin(idToken, targetRole);
-      console.log("YUBorilayotgan token:", response);
+  
 
       if (response.success && response.data) {
         const { user, accessToken, refreshToken, tokens } = response.data;
@@ -144,7 +144,7 @@ export const Login: React.FC = () => {
         const redirectPath =
           targetRole === 'GUIDE' || effectiveUser.role === 'GUIDE' || effectiveUser.role === 'ADMIN'
             ? '/guide/dashboard'
-            : '/';
+            : '/home';
 
         setTimeout(() => {
           navigate(redirectPath);
